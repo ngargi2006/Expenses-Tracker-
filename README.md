@@ -1,7 +1,7 @@
 # Expenses-Tracker-
 I built this expense tracker using AI to help me, as a student, manage my money and track my daily spending. 💙 **My Student Wallet** is a student-friendly finance tracker built using HTML, CSS, and JavaScript.
 
-✨ **Main Features:**✨
+✨ Main Features:✨
 - 💰 **Balance Management** – Set and edit your starting balance.
 - 📊 **Income & Expense Tracking** – Monitor total income, expenses, and remaining balance.
 - 🧾 **Transaction Management** – Add, view, and delete transactions.
