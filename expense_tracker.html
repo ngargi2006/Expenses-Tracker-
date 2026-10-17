@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Student Wallet 💙</title>
+
+<style>
+:root {
+    --bg: #eef8ff;
+    --card: rgba(255,255,255,0.75);
+    --text: #304b60;
+    --muted: #7890a3;
+    --primary: #6db5dc;
+    --primary-light: #dff3ff;
+    --purple: #b7a5e8;
+    --green: #72c9a5;
+    --red: #ed8f9d;
+    --border: rgba(255,255,255,0.8);
+    --shadow: rgba(72,130,165,0.18);
+}
+
+body.dark {
+    --bg: #101c27;
+    --card: rgba(28,43,55,0.88);
+    --text: #e8f5fc;
+    --muted: #9ab0bf;
+    --primary: #8ac9e8;
+    --primary-light: #203846;
+    --purple: #bca9ed;
+    --green: #75d1aa;
+    --red: #f09aaa;
+    --border: rgba(255,255,255,0.08);
+    --shadow: rgba(0,0,0,0.35);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 10% 10%, #d9f2ff 0%, transparent 25%),
+        radial-gradient(circle at 90% 20%, #e7dcff 0%, transparent 25%),
+        radial-gradient(circle at 50% 100%, #d9f7ee 0%, transparent 30%),
+        var(--bg);
+    color: var(--text);
+    transition: 0.4s;
+    padding: 30px 15px;
+}
+
+body.dark {
+    background:
+        radial-gradient(circle at 10% 10%, #183448 0%, transparent 28%),
+        radial-gradient(circle at 90% 20%, #30254b 0%, transparent 28%),
+        var(--bg);
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* HEADER */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.header p {
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.theme-btn {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: var(--card);
+    box-shadow: 0 10px 30px var(--shadow);
+    cursor: pointer;
+    font-size: 21px;
+    transition: 0.3s;
+}
+
+.theme-btn:hover {
+    transform: rotate(20deg) scale(1.08);
+}
+
+/* BALANCE */
+
+.balance-card {
+    background: linear-gradient(
+        135deg,
+        rgba(110,181,220,0.95),
+        rgba(183,165,232,0.95)
+    );
+    color: white;
+    padding: 28px;
+    border-radius: 30px;
+    box-shadow: 0 20px 50px var(--shadow);
+    margin-bottom: 22px;
+    position: relative;
+    overflow: hidden;
+}
+
+.balance-card::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    right: -50px;
+    top: -70px;
+}
+
+.balance-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.balance-label {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.balance {
+    font-size: 2.7rem;
+    font-weight: 700;
+    margin: 8px 0;
+}
+
+.balance-edit {
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    padding: 11px 16px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+.balance-edit:hover {
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-2px);
+}
+
+.balance-note {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* STATS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(18px);
+    border-radius: 24px;
+    padding: 22px;
+    box-shadow: 0 15px 35px var(--shadow);
+}
+
+.stat-title {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-top: 7px;
+}
+
+.income {
+    color: var(--green);
+}
+
+.expense {
+    color: var(--red);
+}
+
+.savings {
+    color: var(--purple);
+}
+
+/* MAIN GRID */
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 22px;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(18px);
+    border-radius: 28px;
+    padding: 25px;
+    box-shadow: 0 15px 35px var(--shadow);
+}
+
+.card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+}
+
+/* FORM */
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 7px;
+}
+
+input, select {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid transparent;
+    border-radius: 15px;
+    outline: none;
+    background: var(--primary-light);
+    color: var(--text);
+    font-size: 0.95rem;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primary);
+}
+
+.type-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.type-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    background: var(--primary-light);
+    color: var(--text);
+    font-weight: 600;
+}
+
+.type-btn.active-income {
+    background: var(--green);
+    color: white;
+}
+
+.type-btn.active-expense {
+    background: var(--red);
+    color: white;
+}
+
+.add-btn {
+    width: 100%;
+    border: none;
+    padding: 14px;
+    border-radius: 16px;
+    background: linear-gradient(135deg,#70bce4,#b39be5);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px var(--shadow);
+}
+
+/* TRANSACTIONS */
+
+.transaction {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px;
+    margin-bottom: 10px;
+    background: var(--primary-light);
+    border-radius: 17px;
+}
+
+.transaction-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.transaction-icon {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: white;
+}
+
+body.dark .transaction-icon {
+    background: #293d4b;
+}
+
+.transaction-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.transaction-category {
+    font-size: 0.72rem;
+    color: var(--muted);
+}
+
+.transaction-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.amount {
+    font-weight: 700;
+}
+
+.amount.income {
+    color: var(--green);
+}
+
+.amount.expense {
+    color: var(--red);
+}
+
+.delete-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    opacity: 0.6;
+}
+
+.delete-btn:hover {
+    opacity: 1;
+}
+
+/* CATEGORY */
+
+.category {
+    margin-bottom: 15px;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    margin-bottom: 6px;
+}
+
+.progress {
+    height: 9px;
+    border-radius: 20px;
+    background: var(--primary-light);
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg,#72bfe4,#b39ce8);
+    transition: width 0.5s;
+}
+
+/* MODAL */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20,40,55,0.45);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    width: 100%;
+    max-width: 420px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(25px);
+    border-radius: 30px;
+    padding: 28px;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.25);
+    animation: pop 0.25s ease;
+}
+
+@keyframes pop {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal h2 {
+    margin-bottom: 8px;
+}
+
+.modal p {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+}
+
+.modal-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.cancel-btn,
+.save-balance-btn {
+    border: none;
+    padding: 13px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.cancel-btn {
+    background: var(--primary-light);
+    color: var(--text);
+}
+
+.save-balance-btn {
+    background: linear-gradient(135deg,#70bce4,#b39be5);
+    color: white;
+}
+
+/* EMPTY */
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 30px 10px;
+    font-size: 0.9rem;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:800px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:600px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .balance {
+        font-size: 2.2rem;
+    }
+
+    .balance-top {
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div>
+            <h1>💙 My Student Wallet</h1>
+            <p>Track your money without the boring spreadsheets ✨</p>
+        </div>
+
+        <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">
+            🌙
+        </button>
+    </div>
+
+
+    <!-- BALANCE -->
+    <div class="balance-card">
+
+        <div class="balance-top">
+
+            <div>
+                <div class="balance-label">
+                    AVAILABLE BALANCE
+                </div>
+
+                <div class="balance" id="balance">
+                    ₹0
+                </div>
+
+                <div class="balance-note">
+                    Your current spending money 💸
+                </div>
+            </div>
+
+            <button class="balance-edit" onclick="openBalanceModal()">
+                ✏️ Edit Balance
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="stat-title">💚 TOTAL INCOME</div>
+            <div class="stat-value income" id="income">
+                ₹0
+            </div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-title">❤️ TOTAL EXPENSES</div>
+            <div class="stat-value expense" id="expenses">
+                ₹0
+            </div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-title">💜 SAVINGS</div>
+            <div class="stat-value savings" id="savings">
+                ₹0
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- MAIN -->
+
+    <div class="main-grid">
+
+        <!-- ADD TRANSACTION -->
+
+        <div class="card">
+
+            <h2>✨ Quick Add</h2>
+
+            <div class="form-group">
+                <label>Description</label>
+                <input
+                    type="text"
+                    id="description"
+                    placeholder="e.g. College canteen"
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Amount (₹)</label>
+                <input
+                    type="number"
+                    id="amount"
+                    placeholder="e.g. 250"
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Category</label>
+
+                <select id="category">
+                    <option value="Food">🍕 Food</option>
+                    <option value="Travel">🚌 Travel</option>
+                    <option value="Study">📚 Study</option>
+                    <option value="Fun">🎮 Fun</option>
+                    <option value="Other">✨ Other</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Type</label>
+
+                <div class="type-buttons">
+
+                    <button
+                        class="type-btn active-expense"
+                        id="expenseBtn"
+                        onclick="selectType('expense')"
+                    >
+                        💸 Expense
+                    </button>
+
+                    <button
+                        class="type-btn"
+                        id="incomeBtn"
+                        onclick="selectType('income')"
+                    >
+                        💰 Income
+                    </button>
+
+                </div>
+
+            </div>
+
+            <button class="add-btn" onclick="addTransaction()">
+                + Add Transaction
+            </button>
+
+        </div>
+
+
+        <!-- RECENT TRANSACTIONS -->
+
+        <div class="card">
+
+            <h2>🧾 Recent Transactions</h2>
+
+            <div id="transactions"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CATEGORY BREAKDOWN -->
+
+    <div class="card" style="margin-top:22px">
+
+        <h2>📊 Spending Breakdown</h2>
+
+        <div id="categories"></div>
+
+    </div>
+
+</div>
+
+
+<!-- BALANCE MODAL -->
+
+<div class="modal-overlay" id="balanceModal">
+
+    <div class="modal">
+
+        <h2>💰 Set Available Balance</h2>
+
+        <p>
+            Enter the amount of money you currently have available.
+            This will be your starting balance.
+        </p>
+
+        <div class="form-group">
+
+            <label>Available Balance (₹)</label>
+
+            <input
+                type="number"
+                id="startingBalanceInput"
+                placeholder="e.g. 10000"
+                min="0"
+            >
+
+        </div>
+
+        <div class="modal-buttons">
+
+            <button
+                class="cancel-btn"
+                onclick="closeBalanceModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="save-balance-btn"
+                onclick="saveStartingBalance()"
+            >
+                Save Balance
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let transactions =
+    JSON.parse(localStorage.getItem("transactions")) || [];
+
+let startingBalance =
+    Number(localStorage.getItem("startingBalance")) || 0;
+
+let currentType = "expense";
+
+
+// -------------------------
+// FORMAT MONEY
+// -------------------------
+
+function formatMoney(amount) {
+
+    return "₹" + Number(amount).toLocaleString("en-IN");
+
+}
+
+
+// -------------------------
+// SELECT TRANSACTION TYPE
+// -------------------------
+
+function selectType(type) {
+
+    currentType = type;
+
+    const expenseBtn =
+        document.getElementById("expenseBtn");
+
+    const incomeBtn =
+        document.getElementById("incomeBtn");
+
+    expenseBtn.classList.remove("active-expense");
+    incomeBtn.classList.remove("active-income");
+
+    if(type === "expense") {
+
+        expenseBtn.classList.add("active-expense");
+
+    } else {
+
+        incomeBtn.classList.add("active-income");
+
+    }
+
+}
+
+
+// -------------------------
+// ADD TRANSACTION
+// -------------------------
+
+function addTransaction() {
+
+    const description =
+        document.getElementById("description").value.trim();
+
+    const amount =
+        Number(document.getElementById("amount").value);
+
+    const category =
+        document.getElementById("category").value;
+
+
+    if(!description || !amount || amount <= 0) {
+
+        alert("Please enter a description and valid amount 💙");
+
+        return;
+
+    }
+
+
+    const transaction = {
+
+        id: Date.now(),
+
+        description: description,
+
+        amount: amount,
+
+        category: category,
+
+        type: currentType
+
+    };
+
+
+    transactions.unshift(transaction);
+
+    localStorage.setItem(
+        "transactions",
+        JSON.stringify(transactions)
+    );
+
+
+    document.getElementById("description").value = "";
+
+    document.getElementById("amount").value = "";
+
+
+    render();
+
+}
+
+
+// -------------------------
+// DELETE TRANSACTION
+// -------------------------
+
+function deleteTransaction(id) {
+
+    transactions =
+        transactions.filter(t => t.id !== id);
+
+    localStorage.setItem(
+        "transactions",
+        JSON.stringify(transactions)
+    );
+
+    render();
+
+}
+
+
+// -------------------------
+// CALCULATE TOTALS
+// -------------------------
+
+function calculateTotals() {
+
+    let income = 0;
+
+    let expenses = 0;
+
+
+    transactions.forEach(t => {
+
+        if(t.type === "income") {
+
+            income += t.amount;
+
+        } else {
+
+            expenses += t.amount;
+
+        }
+
+    });
+
+
+    /*
+       AVAILABLE BALANCE
+
+       Starting Balance
+       + Income
+       - Expenses
+    */
+
+    const balance =
+        startingBalance + income - expenses;
+
+
+    const savings =
+        startingBalance + income - expenses;
+
+
+    document.getElementById("balance").textContent =
+        formatMoney(balance);
+
+    document.getElementById("income").textContent =
+        formatMoney(income);
+
+    document.getElementById("expenses").textContent =
+        formatMoney(expenses);
+
+    document.getElementById("savings").textContent =
+        formatMoney(savings);
+
+}
+
+
+// -------------------------
+// RENDER TRANSACTIONS
+// -------------------------
+
+function renderTransactions() {
+
+    const container =
+        document.getElementById("transactions");
+
+
+    if(transactions.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty">
+                🌱 No transactions yet.<br>
+                Start tracking your money!
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        transactions.slice(0,8).map(t => {
+
+            const icon =
+                t.category === "Food" ? "🍕" :
+                t.category === "Travel" ? "🚌" :
+                t.category === "Study" ? "📚" :
+                t.category === "Fun" ? "🎮" :
+                "✨";
+
+
+            const sign =
+                t.type === "income" ? "+" : "-";
+
+
+            return `
+
+                <div class="transaction">
+
+                    <div class="transaction-left">
+
+                        <div class="transaction-icon">
+                            ${icon}
+                        </div>
+
+                        <div>
+
+                            <div class="transaction-name">
+                                ${t.description}
+                            </div>
+
+                            <div class="transaction-category">
+                                ${t.category}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="transaction-right">
+
+                        <div class="amount ${t.type}">
+                            ${sign}${formatMoney(t.amount)}
+                        </div>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteTransaction(${t.id})"
+                        >
+                            🗑️
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+// -------------------------
+// CATEGORY BREAKDOWN
+// -------------------------
+
+function renderCategories() {
+
+    const container =
+        document.getElementById("categories");
+
+
+    const categoryTotals = {
+
+        Food: 0,
+        Travel: 0,
+        Study: 0,
+        Fun: 0,
+        Other: 0
+
+    };
+
+
+    transactions.forEach(t => {
+
+        if(
+            t.type === "expense" &&
+            categoryTotals[t.category] !== undefined
+        ) {
+
+            categoryTotals[t.category] += t.amount;
+
+        }
+
+    });
+
+
+    const total =
+        Object.values(categoryTotals)
+        .reduce((a,b) => a+b,0);
+
+
+    const icons = {
+
+        Food: "🍕",
+        Travel: "🚌",
+        Study: "📚",
+        Fun: "🎮",
+        Other: "✨"
+
+    };
+
+
+    container.innerHTML =
+        Object.entries(categoryTotals)
+        .map(([category,value]) => {
+
+            const percentage =
+                total === 0
+                ? 0
+                : (value / total) * 100;
+
+
+            return `
+
+                <div class="category">
+
+                    <div class="category-header">
+
+                        <span>
+                            ${icons[category]} ${category}
+                        </span>
+
+                        <span>
+                            ${formatMoney(value)}
+                        </span>
+
+                    </div>
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            style="width:${percentage}%"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+// -------------------------
+// RENDER EVERYTHING
+// -------------------------
+
+function render() {
+
+    calculateTotals();
+
+    renderTransactions();
+
+    renderCategories();
+
+}
+
+
+// -------------------------
+// BALANCE MODAL
+// -------------------------
+
+function openBalanceModal() {
+
+    document.getElementById(
+        "startingBalanceInput"
+    ).value = startingBalance || "";
+
+    document.getElementById(
+        "balanceModal"
+    ).classList.add("show");
+
+}
+
+
+function closeBalanceModal() {
+
+    document.getElementById(
+        "balanceModal"
+    ).classList.remove("show");
+
+}
+
+
+function saveStartingBalance() {
+
+    const value =
+        Number(
+            document.getElementById(
+                "startingBalanceInput"
+            ).value
+        );
+
+
+    if(value < 0 || isNaN(value)) {
+
+        alert("Please enter a valid balance 💙");
+
+        return;
+
+    }
+
+
+    startingBalance = value;
+
+
+    localStorage.setItem(
+        "startingBalance",
+        startingBalance
+    );
+
+
+    closeBalanceModal();
+
+    render();
+
+}
+
+
+// -------------------------
+// CLOSE MODAL WHEN CLICKING OUTSIDE
+// -------------------------
+
+document
+    .getElementById("balanceModal")
+    .addEventListener("click", function(e) {
+
+        if(e.target === this) {
+
+            closeBalanceModal();
+
+        }
+
+    });
+
+
+// -------------------------
+// DARK MODE
+// -------------------------
+
+function toggleTheme() {
+
+    document.body.classList.toggle("dark");
+
+
+    const isDark =
+        document.body.classList.contains("dark");
+
+
+    document.getElementById("themeBtn").textContent =
+        isDark ? "☀️" : "🌙";
+
+
+    localStorage.setItem(
+        "darkMode",
+        isDark
+    );
+
+}
+
+
+if(localStorage.getItem("darkMode") === "true") {
+
+    document.body.classList.add("dark");
+
+    document.getElementById("themeBtn").textContent =
+        "☀️";
+
+}
+
+
+// INITIAL RENDER
+
+render();
+
+</script>
+
+</body>
+</html>
+
